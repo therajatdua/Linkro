@@ -95,6 +95,21 @@ export async function saveProfile(uid: string, payload: Pick<UserDoc, "profile" 
   await adminDb().collection("users").doc(uid).set(payload, { merge: true });
 }
 
+export async function isUsernameAvailable(username: string, currentUid: string): Promise<boolean> {
+  const snap = await adminDb()
+    .collection("users")
+    .where("username", "==", username)
+    .limit(2)
+    .get();
+  if (snap.empty) return true;
+  // Allow if the only match is the current user
+  return snap.docs.length === 1 && snap.docs[0].id === currentUid;
+}
+
+export async function updateUsername(uid: string, username: string) {
+  await adminDb().collection("users").doc(uid).set({ username }, { merge: true });
+}
+
 export async function replaceLinks(uid: string, links: LinkDoc[]) {
   const db = adminDb();
   const batch = db.batch();

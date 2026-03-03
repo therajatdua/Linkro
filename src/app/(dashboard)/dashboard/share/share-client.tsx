@@ -14,16 +14,16 @@ interface ShareClientProps {
 }
 
 const BRAND_BLUE = "#7C3AED"; // violet-600
+const APP_URL = "https://linkro-liard.vercel.app";
 
 export function ShareClient({ username, profile }: ShareClientProps) {
   const [copied, setCopied] = useState(false);
   const qrRef = useRef<HTMLDivElement>(null);
 
-  const baseUrl =
-    typeof window !== "undefined" ? window.location.origin : "https://linkro.app";
-  const publicUrl = username ? `${baseUrl}/${username}` : `${baseUrl}/`;
+  const publicUrl = username ? `${APP_URL}/${username}` : null;
 
   async function handleCopy() {
+    if (!publicUrl) return;
     await navigator.clipboard.writeText(publicUrl);
     setCopied(true);
     toast.success("Link copied!");
@@ -68,14 +68,18 @@ export function ShareClient({ username, profile }: ShareClientProps) {
     toast.success("QR code downloaded");
   }
 
-  if (!username) {
+  if (!username || !publicUrl) {
     return (
       <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-zinc-800/60 bg-zinc-900/40 p-8 text-center">
         <div>
           <QrCode className="mx-auto mb-3 h-10 w-10 text-zinc-600" />
           <p className="text-sm font-medium">Username not set</p>
           <p className="mt-1 text-xs text-zinc-500">
-            Set your username on the Settings page to get a shareable link.
+            Go to{" "}
+            <a href="/dashboard/settings" className="text-violet-400 underline underline-offset-2">
+              Settings
+            </a>{" "}
+            to claim your unique username and get your shareable link.
           </p>
         </div>
       </div>
