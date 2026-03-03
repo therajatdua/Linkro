@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Linkro
 
-## Getting Started
+Linkro is a production-oriented SaaS starter for creators to manage digital identities with two separate interfaces:
 
-First, run the development server:
+- Creator Dashboard for profile/link management and analytics
+- Admin Command Center for platform oversight, usage insights, and revenue metrics
+
+## Tech Stack
+
+- Next.js App Router + TypeScript (strict)
+- Tailwind CSS + shadcn-style UI primitives + Framer Motion
+- Firebase (Auth, Firestore, Storage) with Admin SDK session cookies
+- Zustand + React Hook Form + Zod
+- Stripe subscriptions and webhook entry point
+- Recharts for creator/admin analytics visualizations
+
+## Features Implemented
+
+### Creator Dashboard
+
+- Profile Builder with template choices (Minimal, Glassmorphism, Neo-brutalism)
+- Live mobile frame preview while editing profile values
+- Link management with add/edit/delete and drag-and-drop reordering
+- Analytics cards for unique visitors, views, clicks, CTR ($CTR = Clicks / Views * 100$)
+- Link performance and referrer charts
+
+### Admin Command Center
+
+- Custom-claim gated admin route (`admin: true`)
+- Platform metrics: total users, active users (24h/7d), template usage
+- Revenue metrics: active Pro count, MRR, transaction history from Stripe
+- User management table with uid/email/join date/status
+
+### Public Profile + Performance
+
+- Dynamic profile route at `/{username}`
+- ISR revalidation for fast profile loads
+- Dynamic OG image endpoint (`/api/og`)
+- Edge click and view tracking with low-latency redirect behavior
+
+## Firestore Collections
+
+- `users`: `uid`, `username`, `email`, `plan`, `templateId`, `profile`, `status`
+- `links`: `userId`, `title`, `url`, `order`, `isActive`
+- `analytics_events`: `linkId`, `ownerId`, `type`, `timestamp`, `metadata`
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and fill values:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Required groups:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Firebase client env (`NEXT_PUBLIC_FIREBASE_*`)
+- Firebase Admin env (`FIREBASE_PROJECT_ID`, `FIREBASE_CLIENT_EMAIL`, `FIREBASE_PRIVATE_KEY`)
+- Stripe env (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Run Locally
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open `http://localhost:3000`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Production Validation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Build currently passes for the full app routes and API handlers.
