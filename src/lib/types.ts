@@ -4,7 +4,11 @@ export type TemplateType = "minimal" | "glass" | "neo";
 // ─── Style Engine ────────────────────────────────────────────────────────────
 
 export type BackgroundStyle = "solid" | "mesh" | "image";
+/** @deprecated use buttonShape + buttonEffect instead */
 export type ButtonStyle = "glass" | "neumorphic" | "minimal" | "pill";
+export type ButtonShape = "sharp" | "rounded" | "pill";
+export type ButtonEffect = "glass" | "shadow" | "solid";
+export type VibePreset = "midnight" | "glass" | "matcha" | "brutalist";
 export type FontPairing =
   | "clash"      // Clash Display + Inter       — modern / techy
   | "playfair"   // Playfair Display + Lato      — editorial / elegant
@@ -16,7 +20,11 @@ export interface StyleSettings {
   background: BackgroundStyle;
   /** hex for solid, mesh preset id for mesh, URL for image */
   backgroundValue: string;
-  buttonStyle: ButtonStyle;
+  /** @deprecated kept for backward-compat data; prefer buttonShape+buttonEffect */
+  buttonStyle?: ButtonStyle;
+  buttonShape?: ButtonShape;
+  buttonEffect?: ButtonEffect;
+  vibePreset?: VibePreset;
   fontPairing: FontPairing;
   accentColor: string;
   /** dark | light vibe for the public page */
@@ -71,15 +79,22 @@ export interface CreatorAnalytics {
   ctr: number;
   linkClicks: Array<{ linkId: string; title: string; clicks: number }>;
   referrers: Array<{ source: string; value: number }>;
+  /** clicks per link in the last 24 hours */
+  heatmap24h: Array<{ linkId: string; title: string; clicks: number; isHot: boolean }>;
+  countryBreakdown: Array<{ country: string; value: number }>;
 }
 
 export interface AdminMetrics {
   totalUsers: number;
   users24h: number;
   users7d: number;
-  templateUsage: Array<{ templateId: TemplateType; count: number }>;
+  templateUsage: Array<{ templateId: string; count: number }>;
   activeProMemberships: number;
   mrr: number;
+  churnRate: number;
+  planBreakdown: { free: number; pro: number };
+  vibeUsage: Array<{ vibePreset: string; count: number }>;
+  buttonShapeUsage: Array<{ shape: string; count: number }>;
   transactions: Array<{ id: string; amount: number; currency: string; status: string; created: string }>;
-  users: Array<{ uid: string; email: string; joinDate: string; status: "active" | "banned" }>;
+  users: Array<{ uid: string; username?: string; email: string; plan: string; joinDate: string; status: "active" | "banned" }>;
 }

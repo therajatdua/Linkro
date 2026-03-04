@@ -172,7 +172,12 @@ function LivePreview({ profile, username, links, style }: LivePreviewProps) {
   }
 
   const isLight = style?.vibe === "light";
-  const btnClass = style ? `btn-${style.buttonStyle}` : "btn-glass";
+  const btnClass = (() => {
+    if (style?.buttonShape && style?.buttonEffect) {
+      return `btn-shape-${style.buttonShape} btn-effect-${style.buttonEffect} w-full`;
+    }
+    return `${style?.buttonStyle ? `btn-${style.buttonStyle}` : "btn-glass"} w-full`;
+  })();
   const headingFont = style ? buildFontClass(style.fontPairing, "heading") : "";
   const bodyFont = style ? buildFontClass(style.fontPairing, "body") : "";
 

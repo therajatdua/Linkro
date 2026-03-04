@@ -191,12 +191,24 @@ export async function getAdminMetrics(): Promise<AdminMetrics> {
     }).length;
 
     const usage = new Map<string, number>();
+    const vibeMap = new Map<string, number>();
+    const shapeMap = new Map<string, number>();
     for (const user of users) {
       const key = user.templateId;
       usage.set(key, (usage.get(key) ?? 0) + 1);
+      if (user.style?.vibePreset) vibeMap.set(user.style.vibePreset, (vibeMap.get(user.style.vibePreset) ?? 0) + 1);
+      if (user.style?.buttonShape) shapeMap.set(user.style.buttonShape, (shapeMap.get(user.style.buttonShape) ?? 0) + 1);
     }
 
     let activeProMemberships = users.filter((user) => user.plan === "pro").length;
+    const planBreakdown = { free: users.filter((u) => u.plan === "free").length, pro: activeProMemberships };
+    // Churn: users with no login/creation in last 30 days
+    const thirtyDaysAgo = now - 30 * day;
+    const churned = users.filter((u) => {
+      const ts = u.lastLoginAt ?? u.createdAt;
+      return ts ? new Date(ts).getTime() < thirtyDaysAgo : false;
+    }).length;
+    const churnRate = users.length ? Number(((churned / users.length) * 100).toFixed(1)) : 0;
     let mrr = activeProMemberships * 15;
     let transactions: AdminMetrics["transactions"] = [];
 
@@ -228,10 +240,16 @@ export async function getAdminMetrics(): Promise<AdminMetrics> {
       })),
       activeProMemberships,
       mrr,
+      churnRate,
+      planBreakdown,
+      vibeUsage: Array.from(vibeMap.entries()).map(([vibePreset, count]) => ({ vibePreset, count })),
+      buttonShapeUsage: Array.from(shapeMap.entries()).map(([shape, count]) => ({ shape, count })),
       transactions,
       users: users.map((user) => ({
         uid: user.uid,
+        username: user.username,
         email: user.email,
+        plan: user.plan,
         joinDate: user.createdAt ?? new Date().toISOString(),
         status: user.status ?? "active",
       })),
@@ -248,11 +266,24 @@ export async function getAdminMetrics(): Promise<AdminMetrics> {
       ],
       activeProMemberships: 42,
       mrr: 630,
+      churnRate: 3.1,
+      planBreakdown: { free: 86, pro: 42 },
+      vibeUsage: [
+        { vibePreset: "midnight", count: 48 },
+        { vibePreset: "glass",    count: 35 },
+        { vibePreset: "matcha",   count: 27 },
+        { vibePreset: "brutalist",count: 18 },
+      ],
+      buttonShapeUsage: [
+        { shape: "rounded", count: 61 },
+        { shape: "pill",    count: 44 },
+        { shape: "sharp",   count: 23 },
+      ],
       transactions: [
         { id: "ch_demo_1", amount: 15, currency: "usd", status: "succeeded", created: new Date().toISOString() },
       ],
       users: [
-        { uid: "demo-user-id", email: "demo@linkro.app", joinDate: new Date().toISOString(), status: "active" },
+        { uid: "demo-user-id", username: "demo", email: "demo@linkro.app", plan: "pro", joinDate: new Date().toISOString(), status: "active" },
       ],
     };
   }

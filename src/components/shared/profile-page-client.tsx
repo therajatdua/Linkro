@@ -41,7 +41,13 @@ export function ProfilePageClient({ profile, username, links, uid, style }: Prof
     };
   }
 
-  const btnClass = `${style ? `btn-${style.buttonStyle}` : "btn-glass"} w-full`;
+  const btnClass = (() => {
+    if (style?.buttonShape && style?.buttonEffect) {
+      return `btn-shape-${style.buttonShape} btn-effect-${style.buttonEffect} profile-link-btn w-full`;
+    }
+    // backward-compat for old buttonStyle field
+    return `${style?.buttonStyle ? `btn-${style.buttonStyle}` : "btn-glass"} profile-link-btn w-full`;
+  })();
   const headingFont = style ? buildFontClass(style.fontPairing, "heading") : "";
   const bodyFont = style ? buildFontClass(style.fontPairing, "body") : "";
   const textPrimary = isLight ? "text-zinc-900" : "text-white";

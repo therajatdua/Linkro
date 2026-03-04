@@ -96,7 +96,7 @@ body {
   background-color: #0c0800;
 }
 
-/* ─── Style Engine: button style classes ────────────────────────────────── */
+/* ─── Style Engine: button style classes (legacy) ─────────────────────── */
 .btn-glass {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
@@ -130,6 +130,48 @@ body {
 }
 .btn-pill:hover { background: rgba(255,255,255,0.18); }
 
+/* ─── Style Engine: button shapes ────────────────────────────────────────── */
+.btn-shape-sharp   { border-radius: 4px;    padding: 0.625rem 1rem; display: block; text-align: center; }
+.btn-shape-rounded { border-radius: 12px;   padding: 0.625rem 1rem; display: block; text-align: center; }
+.btn-shape-pill    { border-radius: 9999px; padding: 0.625rem 1rem; display: block; text-align: center; }
+
+/* ─── Style Engine: button effects ───────────────────────────────────────── */
+.btn-effect-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: inherit;
+}
+.btn-effect-glass:hover { background: rgba(255, 255, 255, 0.15); }
+
+.btn-effect-shadow {
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), 0 1px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: inherit;
+}
+.btn-effect-shadow:hover {
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-effect-solid {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  color: inherit;
+}
+.btn-effect-solid:hover { border-color: rgba(255, 255, 255, 0.9); }
+
+/* ─── Profile link hover animation (scale + shadow) ─────────────────────── */
+.profile-link-btn {
+  transition: transform 150ms ease, box-shadow 150ms ease,
+              background 150ms ease, border-color 150ms ease;
+  cursor: pointer;
+}
+.profile-link-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
 /* light vibe overrides */
 .vibe-light .btn-glass {
   background: rgba(0,0,0,0.05);
@@ -145,6 +187,11 @@ body {
 .vibe-light .btn-minimal:hover { border-color: rgba(0,0,0,0.5); }
 .vibe-light .btn-pill { background: rgba(0,0,0,0.07); border-color: rgba(0,0,0,0.15); }
 .vibe-light .btn-pill:hover { background: rgba(0,0,0,0.12); }
+.vibe-light .btn-effect-glass  { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.12); }
+.vibe-light .btn-effect-glass:hover  { background: rgba(0,0,0,0.09); }
+.vibe-light .btn-effect-shadow { background: rgba(0,0,0,0.03); box-shadow: 0 4px 16px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.08); }
+.vibe-light .btn-effect-solid  { border-color: rgba(0,0,0,0.65); color: #111; }
+.vibe-light .btn-effect-solid:hover  { border-color: #000; }
 
 /* ─── Utilities ──────────────────────────────────────────────────────────── */
 .glass-card {
