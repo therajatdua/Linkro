@@ -12,7 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { firebaseStorage } from "@/lib/firebase/client";
-import type { LinkDoc, TemplateType, UserProfile } from "@/lib/types";
+import { StyleEngine } from "@/components/editor/style-engine";
+import { DEFAULT_STYLE } from "@/lib/style-utils";
+import type { LinkDoc, StyleSettings, TemplateType, UserProfile } from "@/lib/types";
 
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -30,6 +32,7 @@ interface ProfileFormProps {
   templateId: TemplateType;
   links: LinkDoc[];
   username: string;
+  defaultStyle?: StyleSettings;
 }
 
 const templates: Array<{ id: TemplateType; name: string; accent: string }> = [
@@ -38,7 +41,7 @@ const templates: Array<{ id: TemplateType; name: string; accent: string }> = [
   { id: "neo", name: "Neo-Brutalist", accent: "border-fuchsia-500" },
 ];
 
-export function ProfileForm({ defaultValues, templateId, links, username }: ProfileFormProps) {
+export function ProfileForm({ defaultValues, templateId, links, username, defaultStyle }: ProfileFormProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
@@ -131,7 +134,8 @@ export function ProfileForm({ defaultValues, templateId, links, username }: Prof
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[1fr_260px]">
+    <div className="space-y-6">
+      <div className="grid gap-6 xl:grid-cols-[1fr_260px]">
       {/* ── Form ── */}
       <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/40">
         <div className="border-b border-zinc-800/60 px-6 py-4">
@@ -287,6 +291,8 @@ export function ProfileForm({ defaultValues, templateId, links, username }: Prof
           </div>
         </div>
       </div>
+      </div>
+      <StyleEngine defaultStyle={defaultStyle ?? DEFAULT_STYLE} />
     </div>
   );
 }

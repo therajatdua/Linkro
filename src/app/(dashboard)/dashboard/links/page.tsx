@@ -14,6 +14,7 @@ export default async function LinksPage() {
       plan={creator.plan}
       profile={creator.profile}
       username={creator.username ?? "me"}
+      style={creator.style}
     />
   );
 }

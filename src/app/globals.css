@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* ─── Google Fonts: 5 curated pairings ─────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Nunito:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400;600;700&display=swap");
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.14 0 0);
@@ -42,6 +49,111 @@ body {
   border-color: var(--border);
 }
 
+/* ─── Style Engine: font pairing classes ─────────────────────────────────── */
+.font-clash    { font-family: "Clash Display", sans-serif; }
+.font-inter    { font-family: "Inter", sans-serif; }
+.font-playfair { font-family: "Playfair Display", serif; }
+.font-lato     { font-family: "Lato", sans-serif; }
+.font-space    { font-family: "Space Grotesk", sans-serif; }
+.font-dm       { font-family: "DM Sans", sans-serif; }
+.font-syne     { font-family: "Syne", sans-serif; }
+.font-nunito   { font-family: "Nunito", sans-serif; }
+.font-bebas    { font-family: "Bebas Neue", sans-serif; }
+.font-opensans { font-family: "Open Sans", sans-serif; }
+
+/* ─── Style Engine: mesh gradient presets ────────────────────────────────── */
+.mesh-violet {
+  background: radial-gradient(at 40% 20%, #7c3aed 0, transparent 50%),
+              radial-gradient(at 80% 0%, #4f46e5 0, transparent 50%),
+              radial-gradient(at 0% 50%, #9333ea 0, transparent 50%),
+              radial-gradient(at 80% 50%, #06b6d4 0, transparent 50%),
+              radial-gradient(at 0% 100%, #7c3aed 0, transparent 50%);
+  background-color: #09090b;
+}
+.mesh-rose {
+  background: radial-gradient(at 40% 20%, #e11d48 0, transparent 50%),
+              radial-gradient(at 80% 0%, #f43f5e 0, transparent 50%),
+              radial-gradient(at 0% 50%, #be123c 0, transparent 50%),
+              radial-gradient(at 80% 50%, #fb923c 0, transparent 50%),
+              radial-gradient(at 0% 100%, #e11d48 0, transparent 50%);
+  background-color: #0a0a0a;
+}
+.mesh-ocean {
+  background: radial-gradient(at 40% 20%, #0284c7 0, transparent 50%),
+              radial-gradient(at 80% 0%, #0891b2 0, transparent 50%),
+              radial-gradient(at 0% 50%, #0e7490 0, transparent 50%),
+              radial-gradient(at 80% 50%, #6366f1 0, transparent 50%),
+              radial-gradient(at 0% 100%, #0284c7 0, transparent 50%);
+  background-color: #0a0f1e;
+}
+.mesh-forest {
+  background: radial-gradient(at 40% 20%, #16a34a 0, transparent 50%),
+              radial-gradient(at 80% 0%, #15803d 0, transparent 50%),
+              radial-gradient(at 0% 50%, #065f46 0, transparent 50%),
+              radial-gradient(at 80% 50%, #0d9488 0, transparent 50%),
+              radial-gradient(at 0% 100%, #16a34a 0, transparent 50%);
+  background-color: #020c06;
+}
+.mesh-gold {
+  background: radial-gradient(at 40% 20%, #d97706 0, transparent 50%),
+              radial-gradient(at 80% 0%, #b45309 0, transparent 50%),
+              radial-gradient(at 0% 50%, #92400e 0, transparent 50%),
+              radial-gradient(at 80% 50%, #dc2626 0, transparent 50%),
+              radial-gradient(at 0% 100%, #d97706 0, transparent 50%);
+  background-color: #0c0800;
+}
+
+/* ─── Style Engine: button style classes ────────────────────────────────── */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: inherit;
+}
+.btn-glass:hover { background: rgba(255, 255, 255, 0.14); }
+
+.btn-neumorphic {
+  background: #1e1e2e;
+  box-shadow: 6px 6px 14px rgba(0,0,0,0.45), -4px -4px 10px rgba(255,255,255,0.04);
+  border: none;
+  color: inherit;
+}
+.btn-neumorphic:hover {
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.55), -2px -2px 6px rgba(255,255,255,0.06);
+}
+
+.btn-minimal {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  color: inherit;
+}
+.btn-minimal:hover { border-color: rgba(255,255,255,0.6); }
+
+.btn-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: inherit;
+}
+.btn-pill:hover { background: rgba(255,255,255,0.18); }
+
+/* light vibe overrides */
+.vibe-light .btn-glass {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.12);
+}
+.vibe-light .btn-glass:hover { background: rgba(0,0,0,0.1); }
+.vibe-light .btn-neumorphic {
+  background: #f0f0f5;
+  box-shadow: 5px 5px 12px rgba(0,0,0,0.12), -4px -4px 10px rgba(255,255,255,0.85);
+  color: #111;
+}
+.vibe-light .btn-minimal { border-color: rgba(0,0,0,0.2); }
+.vibe-light .btn-minimal:hover { border-color: rgba(0,0,0,0.5); }
+.vibe-light .btn-pill { background: rgba(0,0,0,0.07); border-color: rgba(0,0,0,0.15); }
+.vibe-light .btn-pill:hover { background: rgba(0,0,0,0.12); }
+
+/* ─── Utilities ──────────────────────────────────────────────────────────── */
 .glass-card {
   background: color-mix(in oklab, var(--background) 80%, transparent);
   backdrop-filter: blur(10px);

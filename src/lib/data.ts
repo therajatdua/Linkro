@@ -95,6 +95,10 @@ export async function saveProfile(uid: string, payload: Pick<UserDoc, "profile" 
   await adminDb().collection("users").doc(uid).set(payload, { merge: true });
 }
 
+export async function saveStyle(uid: string, style: import("@/lib/types").StyleSettings) {
+  await adminDb().collection("users").doc(uid).set({ style }, { merge: true });
+}
+
 export async function isUsernameAvailable(username: string, currentUid: string): Promise<boolean> {
   const snap = await adminDb()
     .collection("users")

@@ -14,6 +14,7 @@ export default async function ProfilePage() {
       templateId={creator.templateId}
       links={links}
       username={creator.username ?? "me"}
+      defaultStyle={creator.style}
     />
   );
 }

@@ -1,6 +1,28 @@
 export type PlanType = "free" | "pro";
 export type TemplateType = "minimal" | "glass" | "neo";
 
+// ─── Style Engine ────────────────────────────────────────────────────────────
+
+export type BackgroundStyle = "solid" | "mesh" | "image";
+export type ButtonStyle = "glass" | "neumorphic" | "minimal" | "pill";
+export type FontPairing =
+  | "clash"      // Clash Display + Inter       — modern / techy
+  | "playfair"   // Playfair Display + Lato      — editorial / elegant
+  | "space"      // Space Grotesk + DM Sans      — minimal / clean
+  | "syne"       // Syne + Nunito               — playful / creative
+  | "bebas";     // Bebas Neue + Open Sans       — bold / urban
+
+export interface StyleSettings {
+  background: BackgroundStyle;
+  /** hex for solid, mesh preset id for mesh, URL for image */
+  backgroundValue: string;
+  buttonStyle: ButtonStyle;
+  fontPairing: FontPairing;
+  accentColor: string;
+  /** dark | light vibe for the public page */
+  vibe: "dark" | "light";
+}
+
 export interface UserProfile {
   name: string;
   bio: string;
@@ -14,6 +36,7 @@ export interface UserDoc {
   plan: PlanType;
   templateId: TemplateType;
   profile: UserProfile;
+  style?: StyleSettings;
   status?: "active" | "banned";
   createdAt?: string;
   lastLoginAt?: string;
